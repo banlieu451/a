@@ -82,9 +82,11 @@ async function buy() {
 		isScam = true;
 		console.log("\u001b[1;31m" + 'Scam Token not buying' + "\u001b[0m", "\n");
 		token.pop();
+		console.log('here bug in buy up ==>');      
 
 	} catch (e) {
 		// No fifTeenMinutesLock function we should buy it
+		console.log(e);
 		isScam = false;
 		try {
 
@@ -92,8 +94,9 @@ async function buy() {
 			isScam = true;
 			console.log("\u001b[1;31m" + 'Scam Token not buying (Moonseer dev)' + "\u001b[0m", "\n");
 			token.pop();
-
+			console.log('here bug in buy down ==>');      
 		} catch (e) {
+			console.log(e);
 			// Not moonseer contract
 			isScam = false;
 		}
@@ -102,7 +105,8 @@ async function buy() {
 
 	if (buyCount < config.numberOfTokensToBuy && isScam == false) {
 
-try {           
+try {     
+	console.log('here lets buy ==>');      
 		const value = ethers.utils.parseUnits(token[buyCount].investmentAmount, 'ether').toString();
         const tx = await SolidityContractPancakeSwap.swapExactETHForTokensSupportingFeeOnTransferTokens(
 		    		0,
@@ -111,7 +115,7 @@ try {
 		    		Date.now() + 1000 * 60 * 10, 
 		    		{
                         'gasPrice': token[buyCount].gasPrice,
-                        //'gasLimit': 1500000,
+                        'gasLimit': 1500000,
 		    			'value': value
 		    		})
 		    
